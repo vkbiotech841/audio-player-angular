@@ -61,7 +61,7 @@ export class AudioPlayerComponent implements OnInit {
 
   previousSong() {
     this.songIndex--;
-
+    // if the song index is first song and we are trying to go back to previous song, then it take to the last song.
     if (this.songIndex < 0) {
       this.songIndex = this.songs.length - 1;
     }
@@ -70,10 +70,42 @@ export class AudioPlayerComponent implements OnInit {
 
   nextSong() {
     this.songIndex++;
-    if (this.songIndex < 0) {
-      this.songIndex = this.songs.length - 1;
+    // if song index is greater the last song. then it will take us to the first song.
+    if (this.songIndex > this.songs.length - 1) {
+      this.songIndex = 0;
     }
     this.loadSongs(this.songIndex);
+  };
+
+
+  // update progress bar
+  progressPercent: any;
+  updateSongProgress(event) {
+    console.log();
+    const { duration, currentTime } = event.srcElement;
+    this.progressPercent = (currentTime / duration) * 100;
+    // console.log("Audio timeupdate event", duration, currentTime, this.progressPercent);
+  };
+
+
+  // Click on progress bar 
+
+  setProgressBar(event) {
+    const progressBarFullWidth = event.path[0].clientWidth;
+    const clickXonProgressFullWidth = event.offsetX;
+    const duration = this.audioOptionRef.nativeElement.duration;
+    setTimeout(() => {
+      const x = (clickXonProgressFullWidth * 3 / progressBarFullWidth) * 100;
+      console.log("x", x);
+      this.audioOptionRef.nativeElement.currentTime = x;
+    }, 50);
+
+    console.log(progressBarFullWidth, clickXonProgressFullWidth, duration, event);
+  };
+
+  // Auto move to next song , when a track ends
+  autoMoveTotheNextSong() {
+    this.nextSong();
   };
 
 }

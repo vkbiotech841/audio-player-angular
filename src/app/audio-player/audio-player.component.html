@@ -6,13 +6,14 @@
         <!-- Setting audio title -->
         <div class="music-info">
             <h4 id="title">{{songTitle}}</h4>
-            <div class="progress-container" id="progress-container">
-                <div class="progress" id="progress"></div>
+            <div class="progress-container" id="progress-container" (click)="setProgressBar($event)">
+                <div class="progress" id="progress" [style.width.%]="progressPercent"></div>
             </div>
         </div>
 
         <!-- setting audio mp3 file -->
-        <audio [src]="songAudio" #audioOption>
+        <audio [src]="songAudio" #audioOption (timeupdate)="updateSongProgress($event)"
+            (ended)="autoMoveTotheNextSong()">
             Your browser does not support the <code>audio</code> element.
         </audio>
 
@@ -22,13 +23,13 @@
             <img [src]="songImage" alt="music-cover" id="cover">
         </div>
 
-
+        <!-- Audio control buttons -->
         <div class="navigation">
             <button id="prev" class="action-btn" (click)="previousSong()">
                 <i class="fas fa-backward"></i>
             </button>
             <button id="play" class="action-btn action-btn-big">
-                <i class="fas fa-play" *ngIf="isPlaying" (click)="playBtn()"></i>
+                <i class="fas fa-play" *ngIf="isPlaying" (click)="playBtn();"></i>
                 <i class="fas fa-pause" *ngIf="!isPlaying" (click)="pauseBtn()"></i>
             </button>
             <button id="next" class="action-btn" (click)="nextSong()">
@@ -36,4 +37,5 @@
             </button>
         </div>
     </div>
+
 </div>
