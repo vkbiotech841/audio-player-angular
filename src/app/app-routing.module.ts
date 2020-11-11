@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PlaylistComponent } from './playlist/playlist.component';
+import { AudioPlayerComponent } from './audio-player/audio-player.component';
 
 const routes: Routes = [
-  { path: "", component: PlaylistComponent }
+  { path: "", component: AudioPlayerComponent }
 ];
 
 @NgModule({

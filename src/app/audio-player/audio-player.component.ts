@@ -35,13 +35,18 @@ export class AudioPlayerComponent implements OnInit {
   songAudio: any;
   songImage: any;
 
-  songIndex: number = 0;
+  songIndex: number = 1;
   isPlaying: boolean = true;
 
   loadSongs(songIndex) {
     this.songTitle = this.songs[songIndex].title;
     this.songAudio = this.songs[songIndex].audio;
     this.songImage = this.songs[songIndex].image;
+    if (this.audioOptionRef) {
+      setTimeout(() => {
+        this.audioOptionRef.nativeElement.play();
+      }, 500);
+    }
   };
 
   playBtn() {
@@ -55,25 +60,20 @@ export class AudioPlayerComponent implements OnInit {
   };
 
   previousSong() {
-    this.audioOptionRef.nativeElement.pause();
     this.songIndex--;
 
     if (this.songIndex < 0) {
       this.songIndex = this.songs.length - 1;
     }
     this.loadSongs(this.songIndex);
-    this.audioOptionRef.nativeElement.play();
   };
 
   nextSong() {
     this.songIndex++;
-
     if (this.songIndex < 0) {
       this.songIndex = this.songs.length - 1;
     }
     this.loadSongs(this.songIndex);
-    this.audioOptionRef.nativeElement.play();
-
   };
 
 }
